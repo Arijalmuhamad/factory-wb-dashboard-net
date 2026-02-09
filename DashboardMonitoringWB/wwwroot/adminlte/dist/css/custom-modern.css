@@ -1,0 +1,272 @@
+﻿/* ==========================================================================
+   1. DASHBOARD BOXES (Registration Status)
+   ========================================================================== */
+.sb-modern {
+	border: none !important;
+	border-radius: 15px !important;
+	overflow: hidden;
+	transition: all 0.3s ease;
+	position: relative;
+	min-height: 130px;
+	box-shadow: 0 4px 6px rgba(0,0,0,0.07);
+}
+
+	.sb-modern:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 12px 24px rgba(0,0,0,0.15) !important;
+	}
+
+/* Gradients */
+.bg-gradient-blue {
+	background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+}
+
+.bg-gradient-green {
+	background: linear-gradient(135deg, #064e3b 0%, #10b981 100%);
+}
+
+.bg-gradient-orange {
+	background: linear-gradient(135deg, #78350f 0%, #f59e0b 100%);
+}
+
+.bg-gradient-red {
+	background: linear-gradient(135deg, #7f1d1d 0%, #ef4444 100%);
+}
+
+.sb-modern .small-box-footer {
+	background: rgba(255, 255, 255, 0.15) !important;
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+	border-top: 1px solid rgba(255,255,255,0.1);
+	padding: 8px 0 !important;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	z-index: 10;
+}
+
+.sb-modern .icon {
+	color: rgba(255,255,255,0.2) !important;
+	transition: all 0.3s ease;
+	top: 10px !important;
+	right: 15px !important;
+}
+
+.sb-modern:hover .icon {
+	color: rgba(255,255,255,0.4) !important;
+	font-size: 85px !important;
+}
+
+/* ==========================================================================
+   2. TRANSACTION CARDS (Tonnage)
+   ========================================================================== */
+.info-card {
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	border-radius: 16px !important;
+}
+
+	.info-card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 12px 20px -10px rgba(0,0,0,0.1) !important;
+	}
+
+/* Consolidated Icon Circle */
+.icon-circle {
+	width: 46px;
+	height: 46px;
+	border-radius: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.3s ease;
+}
+
+/* Optimized Soft Backgrounds (RGBA for better blending) */
+.bg-soft-primary {
+	background-color: rgba(59, 130, 246, 0.12) !important;
+	color: #3b82f6 !important;
+}
+
+.bg-soft-danger {
+	background-color: rgba(239, 68, 68, 0.12) !important;
+	color: #ef4444 !important;
+}
+
+.bg-soft-success {
+	background-color: rgba(16, 185, 129, 0.12) !important;
+	color: #10b981 !important;
+}
+
+.bg-soft-warning {
+	background-color: rgba(245, 158, 11, 0.12) !important;
+	color: #f59e0b !important;
+}
+
+.btn-light {
+	border-radius: 10px;
+	transition: all 0.2s ease;
+}
+
+	.btn-light:hover {
+		background-color: #ffffff !important;
+		transform: translateY(-2px);
+		box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+	}
+
+/* ==========================================================================
+   3. SIDEBAR & NAVIGATION
+   ========================================================================== */
+.main-sidebar {
+	background-color: #1e293b !important;
+	border-right: none !important;
+}
+
+.brand-link {
+	border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+	padding: 1.2rem 1rem !important;
+}
+
+.nav-sidebar .nav-item {
+	margin-bottom: 4px;
+	padding: 0 10px;
+}
+
+.nav-sidebar .nav-link {
+	border-radius: 10px !important;
+	transition: all 0.3s ease;
+	color: #94a3b8 !important;
+	padding: 0.75rem 1rem !important;
+}
+
+	.nav-sidebar .nav-link:hover {
+		background-color: rgba(255, 255, 255, 0.05) !important;
+		color: #fff !important;
+	}
+
+	.nav-sidebar .nav-link.active {
+		background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+		box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35) !important;
+		color: #fff !important;
+	}
+
+/* ==========================================================================
+   4. NAVBAR & FOOTER
+   ========================================================================== */
+.main-header {
+	border-bottom: 1px solid #f1f5f9 !important;
+	background-color: rgba(255, 255, 255, 0.95) !important;
+	backdrop-filter: blur(10px);
+}
+
+.main-footer {
+	background-color: #f8fafc !important;
+	border-top: 1px solid #e2e8f0 !important;
+	color: #64748b !important;
+	font-size: 0.85rem;
+	padding: 1rem 1.5rem !important;
+}
+
+/* Status Indicator */
+.footer-status {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin-left: 15px;
+	padding-left: 15px;
+	border-left: 1px solid #e2e8f0;
+}
+
+.dot-pulse {
+	width: 8px;
+	height: 8px;
+	background-color: #10b981;
+	border-radius: 50%;
+	animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+	0% {
+		box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+	}
+
+	70% {
+		box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+	}
+
+	100% {
+		box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+	}
+}
+
+/* ==========================================================================
+   COLOR VARIABLES
+   ========================================================================== */
+:root {
+	--bg-main: #f4f6f9;
+	--bg-card: #ffffff;
+	--text-main: #1e293b;
+	--text-muted: #64748b;
+	--border-color: #e2e8f0;
+	--sidebar-bg: #1e293b;
+}
+
+/* DARK MODE OVERRIDES */
+body.dark-mode {
+	--bg-main: #0f172a; /* Deep Navy/Black */
+	--bg-card: #1e293b; /* Slate Blue/Gray */
+	--text-main: #f8fafc; /* Off-white */
+	--text-muted: #94a3b8; /* Muted Gray */
+	--border-color: #334155; /* Darker border */
+}
+
+/* ==========================================================================
+   APPLYING VARIABLES TO YOUR STYLES
+   ========================================================================== */
+body {
+	background-color: var(--bg-main) !important;
+	color: var(--text-main);
+	transition: background-color 0.3s ease;
+}
+
+/* Card Modernization */
+.info-card, .card {
+	background-color: var(--bg-card) !important;
+	border: 1px solid var(--border-color) !important;
+}
+
+	.info-card h3, .info-card h4, .info-card h6 {
+		color: var(--text-main) !important;
+	}
+
+.text-muted {
+	color: var(--text-muted) !important;
+}
+
+/* Header & Navbar */
+.main-header {
+	background-color: var(--bg-card) !important;
+	border-bottom: 1px solid var(--border-color) !important;
+	color: var(--text-main);
+}
+
+	.main-header .nav-link {
+		color: var(--text-muted) !important;
+	}
+
+/* Dashboard Content Header */
+.text-dark {
+	color: var(--text-main) !important;
+}
+
+/* Dashboard Tip Alert */
+.alert.bg-white {
+	background-color: var(--bg-card) !important;
+	border: 1px solid var(--border-color) !important;
+	color: var(--text-main) !important;
+}
+
+/* Footer */
+.main-footer {
+	background-color: var(--bg-card) !important;
+	border-top: 1px solid var(--border-color) !important;
+}

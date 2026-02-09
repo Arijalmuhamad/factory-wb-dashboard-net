@@ -1,0 +1,50 @@
+﻿<div class="modal fade" id="modal-register" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content" style="border-radius: 20px; border: none;">
+            <div class="modal-header border-0 pt-4 px-4">
+                <h5 class="font-weight-bold text-dark"><i class="fas fa-edit text-primary mr-2"></i>New Truck Entry</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body px-4 pb-4">
+                <form id="form-registration">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label class="small font-weight-bold text-muted text-uppercase">Plate Number</label>
+                                <input type="text" class="form-control bg-light border-0" placeholder="e.g. BH 1234 ABC" style="border-radius: 10px; height: 45px;">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="small font-weight-bold text-muted text-uppercase">Driver Name</label>
+                                <input type="text" class="form-control bg-light border-0" placeholder="Enter driver name" style="border-radius: 10px; height: 45px;">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mb-3">
+                                <label class="small font-weight-bold text-muted text-uppercase">Supplier / Estate</label>
+                                <select class="form-control bg-light border-0" style="border-radius: 10px; height: 45px;">
+                                    <option value="">Select Supplier</option>
+                                    <option>PT. Berkat Sawit Utama</option>
+                                    <option>Estate Mandiri Jaya</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="small font-weight-bold text-muted text-uppercase">Material Type</label>
+                                <select class="form-control bg-light border-0" style="border-radius: 10px; height: 45px;">
+                                    <option>FFB (Palm Oil)</option>
+                                    <option>CPO</option>
+                                    <option>Palm Kernel</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer border-0 px-4 pb-4">
+                <button type="button" class="btn btn-light px-4 font-weight-bold" data-dismiss="modal" style="border-radius: 10px;">Cancel</button>
+                <button type="submit" form="form-registration" class="btn btn-primary px-4 font-weight-bold shadow-sm" style="border-radius: 10px;">Confirm & Print Ticket</button>
+            </div>
+        </div>
+    </div>
+</div>
