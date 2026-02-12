@@ -1,0 +1,151 @@
+﻿@{
+    ViewData["Title"] = "Monitoring Truk";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-3 align-items-end">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark font-weight-bold">
+                    <i class="fas fa-desktop mr-2 text-primary"></i>MONITORING REGISTRASI
+                </h1>
+                <p class="text-muted mb-0">Daftar kendaraan aktif di dalam area pabrik (In-Plant).</p>
+            </div>
+            <div class="col-sm-6 text-sm-right">
+                <button class="btn btn-primary shadow-sm px-4" style="border-radius: 10px;" data-toggle="modal" data-target="#modal-register">
+                    <i class="fas fa-truck-moving mr-2"></i>Registrasi In Baru
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="info-box shadow-sm border-0" style="border-radius: 12px;">
+                    <span class="info-box-icon bg-info elevation-0"><i class="fas fa-sign-in-alt"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text text-uppercase small font-weight-bold text-muted">Total Reg In</span>
+                        <span class="info-box-number h4 mb-0">12 <small>Truk</small></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info-box shadow-sm border-0" style="border-radius: 12px;">
+                    <span class="info-box-icon bg-success elevation-0"><i class="fas fa-sign-out-alt"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text text-uppercase small font-weight-bold text-muted">Total Reg Out</span>
+                        <span class="info-box-number h4 mb-0">8 <small>Truk</small></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info-box shadow-sm border-0" style="border-radius: 12px;">
+                    <span class="info-box-icon bg-warning elevation-0"><i class="fas fa-hourglass-half text-white"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text text-uppercase small font-weight-bold text-muted">Rata-rata Durasi</span>
+                        <span class="info-box-number h4 mb-0">45 <small>Menit</small></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0" style="border-radius: 15px;">
+            <div class="card-header bg-white py-3 border-0">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h5 class="font-weight-bold mb-0">Antrean Aktif</h5>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <input type="text" id="tableSearch" class="form-control form-control-sm border-right-0" placeholder="Cari Plat Nomor atau Nama Driver..." style="border-radius: 8px 0 0 8px;">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-white border-left-0" style="border-radius: 0 8px 8px 0;"><i class="fas fa-search text-muted"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0" id="registrationTable">
+                        <thead class="bg-light text-muted small text-uppercase">
+                            <tr>
+                                <th class="pl-4">Jam Register</th>
+                                <th>No. Polisi</th>
+                                <th>Informasi Driver</th>
+                                <th>Status Antrean</th>
+                                <th class="text-right pr-4">Opsi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="row-in">
+                                <td class="pl-4">
+                                    <span class="font-weight-bold d-block">09:15</span>
+                                    <small class="badge badge-light border text-muted">Reg IN</small>
+                                </td>
+                                <td>
+                                    <span class="badge badge-dark p-2 px-3" style="font-size: 1rem; font-family: 'Courier New', Courier, monospace;">BH 1234 ABC</span>
+                                </td>
+                                <td>
+                                    <div class="font-weight-bold text-dark">Budi Setiawan</div>
+                                    <div class="small text-muted">PT. Sawit Berkah (FFB)</div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-soft-primary text-primary px-3 py-2" style="border-radius: 10px;">
+                                        <i class="fas fa-clock mr-1"></i> WAITING WEIGH IN
+                                    </span>
+                                </td>
+                                <td class="text-right pr-4">
+                                    <button class="btn btn-sm btn-outline-info rounded-pill px-3">Lanjut Timbang</button>
+                                </td>
+                            </tr>
+
+                            <tr class="row-out">
+                                <td class="pl-4">
+                                    <span class="font-weight-bold d-block">08:30</span>
+                                    <small class="badge badge-light border text-muted">Reg OUT</small>
+                                </td>
+                                <td>
+                                    <span class="badge badge-dark p-2 px-3" style="font-size: 1rem; font-family: 'Courier New', Courier, monospace;">BG 8899 XY</span>
+                                </td>
+                                <td>
+                                    <div class="font-weight-bold text-dark">Andi Wijaya</div>
+                                    <div class="small text-muted">Estate Mandiri (CPO)</div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-soft-success text-success px-3 py-2" style="border-radius: 10px;">
+                                        <i class="fas fa-check-circle mr-1"></i> WAITING WEIGH OUT
+                                    </span>
+                                </td>
+                                <td class="text-right pr-4">
+                                    <button class="btn btn-sm btn-success rounded-pill px-3 shadow-sm">Cetak Tiket</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer bg-white text-muted small py-3 border-0">
+                <i class="fas fa-info-circle mr-1"></i> Klik 'Detail' untuk melihat riwayat log pergerakan truk.
+            </div>
+        </div>
+    </div>
+</section>
+@* 
+@await Html.PartialAsync("_RegistrationModal") *@
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#tableSearch").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#registrationTable tbody tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}

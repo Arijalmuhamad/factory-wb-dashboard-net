@@ -53,18 +53,19 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="/Logistics/Registration" class="nav-link">
+                            <a asp-controller="Registration" asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Registration" ? "active" : "")">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Truck Registration</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a asp-controller="Registration" asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Registration" ? "active" : "")">
-                                <i class="nav-icon fas fa-truck"></i>
-                                <p>Truck Registration</p>
+                            <a asp-controller="Weighed" asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Weighed" ? "active" : "")">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Already Weighed</p>
                             </a>
                         </li>
+                        
                     </ul>
                 </li>
 

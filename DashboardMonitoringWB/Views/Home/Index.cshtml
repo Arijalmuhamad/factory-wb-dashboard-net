@@ -7,16 +7,20 @@
         <div class="row mb-3 align-items-end">
             <div class="col-sm-6">
                 <h1 class="m-0 text-dark font-weight-bold" style="font-size: 1.6rem;">
-                    <i class="fas fa-chart-pie mr-2 text-primary"></i>DASHBOARD MONITORING
+                    <i class="fas fa-chart-pie mr-2 text-primary">DASHBOARD MONITORING</i>
                 </h1>
                 <p class="text-muted mb-0 ml-1">
-                    <i class="far fa-calendar-check mr-1"></i> Operasional: <strong>Senin, 05-02-2026</strong>
+                    <i class="far fa-calendar-check mr-1"></i>
+                    Operasional: <strong>@ViewBag.Today</strong>
                 </p>
             </div>
             <div class="col-sm-6 text-sm-right mt-3 mt-sm-0">
                 <div class="d-inline-block p-3 bg-white shadow-sm rounded-lg border">
                     <small class="text-uppercase text-muted font-weight-bold d-block" style="font-size: 0.7rem; letter-spacing: 1px;">Lokasi Pabrik</small>
-                    <span class="text-dark font-weight-bold"><i class="fas fa-industry mr-1 text-secondary"></i> Berkat Sawit Utama (BU2A)</span>
+                    <span class="text-dark font-weight-bold">
+                        <i class="fas fa-industry mr-1 text-secondary"></i> 
+                        @ViewBag.companyName (@ViewBag.SiteId)
+                    </span>
                 </div>
             </div>
         </div>
@@ -35,17 +39,17 @@
                         <p>Registration In</p>
                     </div>
                     <div class="icon"><i class="fas fa-clipboard-list"></i></div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right ml-1"></i></a>
+                    <a asp-controller="Registration" asp-action="Index" class="small-box-footer">More info <i class="fas fa-arrow-circle-right ml-1 @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Registration" ? "active" : "")"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-6">
                 <div class="small-box sb-modern bg-gradient-green text-white shadow-sm">
                     <div class="inner">
-                        <h3 class="font-weight-bold">53<sup style="font-size: 20px">%</sup></h3>
+                        <h3 class="font-weight-bold">53</h3>
                         <p>Weighing In</p>
                     </div>
                     <div class="icon"><i class="fas fa-balance-scale"></i></div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right ml-1"></i></a>
+                    <a asp-controller="Weighed" asp-action="Index" class="small-box-footer">More info <i class="fas fa-arrow-circle-right ml-1 @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Weighed" ? "active" : "")"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-6">
@@ -55,7 +59,7 @@
                         <p>Weighing Out</p>
                     </div>
                     <div class="icon"><i class="fas fa-truck-moving"></i></div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right ml-1"></i></a>
+                    <a asp-controller="Weighed" asp-action="Index" class="small-box-footer">More info <i class="fas fa-arrow-circle-right ml-1 @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Weighed" ? "active" : "")"></i></a>
                 </div>
             </div>
             <div class="col-lg-3 col-6">
@@ -65,7 +69,7 @@
                         <p>Registration Out</p>
                     </div>
                     <div class="icon"><i class="fas fa-check-double"></i></div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right ml-1"></i></a>
+                    <a asp-controller="Registrarion" asp-action="Index" class="small-box-footer">More info <i class="fas fa-arrow-circle-right ml-1 @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Registration" ? "active": "")"></i></a>
                 </div>
             </div>
         </div>
@@ -83,7 +87,7 @@
                         <h6 class="text-uppercase font-weight-bold mb-1 text-primary" style="font-size: 0.75rem; letter-spacing: 1px;">FFB Intake</h6>
                         <div class="row align-items-end no-gutters">
                             <div class="col-7">
-                                <h3 class="font-weight-bold mb-0 text-dark">245,000</h3>
+                                <h3 class="font-weight-bold mb-0 text-dark">245.000</h3>
                                 <small class="text-muted font-weight-bold">Total Kg</small>
                             </div>
                             <div class="col-5 text-right border-left pl-2">
@@ -112,7 +116,7 @@
                         <h6 class="text-uppercase font-weight-bold mb-1 text-danger" style="font-size: 0.75rem; letter-spacing: 1px;">CPO / PK Sales</h6>
                         <div class="row align-items-end no-gutters">
                             <div class="col-7">
-                                <h3 class="font-weight-bold mb-0 text-dark">120,500</h3>
+                                <h3 class="font-weight-bold mb-0 text-dark">120.500</h3>
                                 <small class="text-muted font-weight-bold">Total Kg</small>
                             </div>
                             <div class="col-5 text-right border-left pl-2">
@@ -141,7 +145,7 @@
                         <h6 class="text-uppercase font-weight-bold mb-1 text-warning" style="font-size: 0.75rem; letter-spacing: 1px;">Internal Stock</h6>
                         <div class="row align-items-end no-gutters">
                             <div class="col-7">
-                                <h3 class="font-weight-bold mb-0 text-dark">45,000</h3>
+                                <h3 class="font-weight-bold mb-0 text-dark">45.000</h3>
                                 <small class="text-muted font-weight-bold">Total Kg</small>
                             </div>
                             <div class="col-5 text-right border-left pl-2">
@@ -170,7 +174,7 @@
                         <h6 class="text-uppercase font-weight-bold mb-1 text-success" style="font-size: 0.75rem; letter-spacing: 1px;">Misc Items</h6>
                         <div class="row align-items-end no-gutters">
                             <div class="col-7">
-                                <h3 class="font-weight-bold mb-0 text-dark">12,400</h3>
+                                <h3 class="font-weight-bold mb-0 text-dark">12.400</h3>
                                 <small class="text-muted font-weight-bold">Total Kg</small>
                             </div>
                             <div class="col-5 text-right border-left pl-2">
@@ -214,14 +218,14 @@
                                         <td class="pl-4 font-weight-bold">BH 8821 ML</td>
                                         <td>PT. Berkat Sawit</td>
                                         <td>FFB Palm</td>
-                                        <td>12,450 Kg</td>
+                                        <td>12.450 Kg</td>
                                         <td><span class="badge badge-primary">Weighing Out</span></td>
                                     </tr>
                                     <tr>
                                         <td class="pl-4 font-weight-bold">BG 1234 XY</td>
                                         <td>Estate Mandiri</td>
                                         <td>FFB Palm</td>
-                                        <td>8,200 Kg</td>
+                                        <td>8.200 Kg</td>
                                         <td><span class="badge badge-warning text-white">In Queue</span></td>
                                     </tr>
                                 </tbody>

@@ -1,15 +1,33 @@
 using System.Diagnostics;
+using DashboardMonitoringWB.Data;
 using DashboardMonitoringWB.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DashboardMonitoringWB.Controllers
 {
     public class HomeController : Controller
-    {
-        public IActionResult Index()
+    {   
+        private readonly ApplicationDbContext _context;
+
+        public HomeController(ApplicationDbContext context)
         {
-            return View();
-        }
+            _context = context;
+		}
+		public IActionResult Index()
+        {
+			// Ambil satu data pertama dari tabel wbs_site_tab
+			var siteInfo = _context.WbsSites.FirstOrDefault();
+
+			// Kirim data ke View melalui ViewBag
+			ViewBag.CompanyName = siteInfo?.sitename ?? "Data Tidak Ditemukan";
+			ViewBag.SiteId = siteInfo?.siteid ?? "---";
+
+			// Mengatur budaya (culture) ke Indonesia agar nama hari otomatis Bahasa Indonesia
+			var culture = new System.Globalization.CultureInfo("id-ID");
+			ViewBag.Today = DateTime.Now.ToString("dddd, dd-MM-yyyy", culture);
+
+			return View();
+		}
 
         public IActionResult Privacy()
         {
