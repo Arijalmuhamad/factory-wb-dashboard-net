@@ -37,7 +37,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box sb-modern bg-gradient-blue text-white shadow-sm">
                     <div class="inner">
-                        <h3 class="font-weight-bold">@Model.RegistIn</h3>
+                        <h3 class="font-weight-bold" id="count-regisIn">@Model.RegistIn</h3>
                         <p>Registration In</p>
                     </div>
                     <div class="icon"><i class="fas fa-clipboard-list"></i></div>
@@ -47,7 +47,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box sb-modern bg-gradient-green text-white shadow-sm">
                     <div class="inner">
-                        <h3 class="font-weight-bold">@Model.WeighingIn</h3>
+                        <h3 class="font-weight-bold" id="count-weighingIn">@Model.WeighingIn</h3>
                         <p>Weighing In</p>
                     </div>
                     <div class="icon"><i class="fas fa-balance-scale"></i></div>
@@ -57,7 +57,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box sb-modern bg-gradient-orange text-white shadow-sm">
                     <div class="inner">
-                        <h3 class="font-weight-bold">@Model.WeighingOut</h3>
+                        <h3 class="font-weight-bold" id="count-weighingOut">@Model.WeighingOut</h3>
                         <p>Weighing Out</p>
                     </div>
                     <div class="icon"><i class="fas fa-truck-moving"></i></div>
@@ -67,7 +67,7 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box sb-modern bg-gradient-red text-white shadow-sm">
                     <div class="inner">
-                        <h3 class="font-weight-bold">@Model.RegistOut</h3>
+                        <h3 class="font-weight-bold" id="count-regisOut">@Model.RegistOut</h3>
                         <p>Registration Out</p>
                     </div>
                     <div class="icon"><i class="fas fa-check-double"></i></div>
@@ -89,11 +89,13 @@
                         <h6 class="text-uppercase font-weight-bold mb-1 text-primary" style="font-size: 0.75rem; letter-spacing: 1px;">FFB Intake</h6>
                         <div class="row align-items-end no-gutters">
                             <div class="col-7">
-                                <h3 class="font-weight-bold mb-0 text-dark">245.000</h3>
+                                @* <h3 class="font-weight-bold mb-0 text-dark">245.000</h3> *@
+                                <h3 class="font-weight-bold mb-0 text-dark" id="count-tonnageFFB">@Model.TotalTonnageFFB</h3>
                                 <small class="text-muted font-weight-bold">Total Kg</small>
                             </div>
                             <div class="col-5 text-right border-left pl-2">
-                                <h4 class="font-weight-bold mb-0 text-primary" style="font-size: 1.25rem;">42</h4>
+                                @* <h4 class="font-weight-bold mb-0 text-primary" style="font-size: 1.25rem;">42</h4> *@
+                                <h4 class="font-weight-bold mb-0 text-primary" id="count-truckFFB">@Model.TotalTruckFFB</h4>
                                 <small class="text-muted">Trucks</small>
                             </div>
                         </div>
@@ -118,11 +120,13 @@
                         <h6 class="text-uppercase font-weight-bold mb-1 text-danger" style="font-size: 0.75rem; letter-spacing: 1px;">CPO / PK Sales</h6>
                         <div class="row align-items-end no-gutters">
                             <div class="col-7">
-                                <h3 class="font-weight-bold mb-0 text-dark">120.500</h3>
+                                @* <h3 class="font-weight-bold mb-0 text-dark">120.500</h3> *@
+                                <h3 class="font-weight-bold mb-0 text-dark" id="count-tonnageSales">@Model.TotalTonnageSales</h3>
                                 <small class="text-muted font-weight-bold">Total Kg</small>
                             </div>
                             <div class="col-5 text-right border-left pl-2">
-                                <h4 class="font-weight-bold mb-0 text-danger" style="font-size: 1.25rem;">12</h4>
+                                @* <h4 class="font-weight-bold mb-0 text-danger" style="font-size: 1.25rem;">12</h4> *@
+                                <h4 class="font-weight-bold mb-0 text-danger" id="count-truckSales">@Model.TotalTruckSales</h4>
                                 <small class="text-muted">Trucks</small>
                             </div>
                         </div>
@@ -147,11 +151,13 @@
                         <h6 class="text-uppercase font-weight-bold mb-1 text-warning" style="font-size: 0.75rem; letter-spacing: 1px;">Internal Stock</h6>
                         <div class="row align-items-end no-gutters">
                             <div class="col-7">
-                                <h3 class="font-weight-bold mb-0 text-dark">45.000</h3>
+                                @* <h3 class="font-weight-bold mb-0 text-dark">45.000</h3> *@
+                                <h3 class="font-weight-bold mb-0 text-dark" id="count-tonnageTransfer">@Model.TotalTonnageTransfer</h3>
                                 <small class="text-muted font-weight-bold">Total Kg</small>
                             </div>
                             <div class="col-5 text-right border-left pl-2">
-                                <h4 class="font-weight-bold mb-0 text-warning" style="font-size: 1.25rem;">8</h4>
+                                @* <h4 class="font-weight-bold mb-0 text-warning" style="font-size: 1.25rem;">8</h4> *@
+                                <h4 class="font-weight-bold mb-0 text-warning" id="count-truckTransfer">@Model.TotalTruckTransfer</h4>
                                 <small class="text-muted">Trucks</small>
                             </div>
                         </div>
@@ -176,11 +182,13 @@
                         <h6 class="text-uppercase font-weight-bold mb-1 text-success" style="font-size: 0.75rem; letter-spacing: 1px;">Misc Items</h6>
                         <div class="row align-items-end no-gutters">
                             <div class="col-7">
-                                <h3 class="font-weight-bold mb-0 text-dark">12.400</h3>
+                                @* <h3 class="font-weight-bold mb-0 text-dark">12.400</h3> *@
+                                <h3 class="font-weight-bold mb-0 text-dark" id="count-tonnageOthers">@Model.TotalTonnageOthers</h3>
                                 <small class="text-muted font-weight-bold">Total Kg</small>
                             </div>
                             <div class="col-5 text-right border-left pl-2">
-                                <h4 class="font-weight-bold mb-0 text-success" style="font-size: 1.25rem;">5</h4>
+                                @* <h4 class="font-weight-bold mb-0 text-success" style="font-size: 1.25rem;">5</h4> *@
+                                <h4 class="font-weight-bold mb-0 text-success" id="count-truckOthers">@Model.TotalTruckOthers</h4>
                                 <small class="text-muted">Trucks</small>
                             </div>
                         </div>
@@ -299,7 +307,26 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+        function formatNumber(number) {
+
+        if (number === undefined || number === null || number === "" || isNaN(number))
+            number = 0;
+
+        return new Intl.NumberFormat('id-ID', {
+            maximumFractionDigits: 0,
+            minimumFractionDigits: 0
+        }).format(Number(number));
+    }
+
+
     document.addEventListener("DOMContentLoaded", function() {
+
+    document.getElementById("count-tonnageFFB").innerText = formatNumber(@Model.TotalTonnageFFB);
+    document.getElementById("count-tonnageSales").innerText = formatNumber(@Model.TotalTonnageSales);
+    document.getElementById("count-tonnageTransfer").innerText = formatNumber(@Model.TotalTonnageTransfer);
+    document.getElementById("count-tonnageOthers").innerText = formatNumber(@Model.TotalTonnageOthers);
+
+
         var ctx = document.getElementById('tonnageChart').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'line',
@@ -326,4 +353,52 @@
             }
         });
     });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.min.js"></script>
+
+<script>
+
+    // 1. Hubungkan ke jalur /dashboardHub
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/dashboardHub")
+        .build();
+
+    // 2. Terima sinyal "UpdateDashboard" dari server
+       connection.on("UpdateDashboard", function (data) {
+        console.log("Menerima data terbaru...", data);
+
+        // Gunakan huruf kecil di depan (registIn, weighingIn, dll)
+        document.getElementById("count-regisIn").innerText = data.registIn;
+        document.getElementById("count-weighingIn").innerText = data.weighingIn;
+        document.getElementById("count-weighingOut").innerText = data.weighingOut;
+        document.getElementById("count-regisOut").innerText = data.registOut;
+
+        // Update Total Truck
+        document.getElementById("count-truckFFB").innerText = data.totalTruckFFB;
+        document.getElementById("count-truckSales").innerText = data.totalTruckSales;
+        document.getElementById("count-truckTransfer").innerText = data.totalTruckTransfer;
+        document.getElementById("count-truckOthers").innerText = data.totalTruckOthers;
+
+           // Update Total Tonnage (ONLY formatted)
+    document.getElementById("count-tonnageFFB").innerText = formatNumber(data.totalTonnageFFB);
+    document.getElementById("count-tonnageSales").innerText = formatNumber(data.totalTonnageSales);
+    document.getElementById("count-tonnageTransfer").innerText = formatNumber(data.totalTonnageTransfer);
+    document.getElementById("count-tonnageOthers").innerText = formatNumber(data.totalTonnageOthers);
+
+        // flashElement("count-regisIn");
+        // flashElement("count-weighingIn");
+        // flashElement("count-weighingOut");
+        // flashElement("count-regisOut");
+    });
+
+    // function flashElement(id) {
+    //     const el = document.getElementById(id);
+    //     el.style.transition = "color 0.3s";
+    //     el.style.color = "#ffc107"; Berubah warna jadi kuning emas sebentar
+    //     setTimeout(() => { el.style.color = ""; }, 1000);
+    // }
+
+    // 3. Mulai koneksi
+    connection.start().catch(err => console.error(err.toString()));
 </script>
