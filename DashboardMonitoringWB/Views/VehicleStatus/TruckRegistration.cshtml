@@ -1,0 +1,197 @@
+﻿@model DashboardMonitoringWB.Models.VehicleStatusViewModel
+
+@{
+    ViewData["Title"] = "Monitoring Registrasi";
+    // Mengambil data paginasi dari ViewBag yang diset di Controller
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+}
+
+<!-- Header Halaman -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-3 align-items-center">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark font-weight-bold">
+                    <i class="fas fa-desktop mr-2 text-primary"></i>MONITORING REGISTRATION TRUK
+                </h1>
+                <p class="text-muted small mb-0">Pantauan real-time kendaraan di area pabrik (In-Plant) berdasarkan shift operasional.</p>
+            </div>
+            <div class="col-sm-6 text-right">
+                <button class="btn btn-primary shadow-sm px-4" style="border-radius: 10px;" onclick="location.reload();">
+                    <i class="fas fa-sync-alt mr-2"></i>Segarkan Data
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <!-- Statistik Info Boxes -->
+        <div class="row mb-4">
+            <!-- Box Total Reg In -->
+            <div class="col-md-6">
+                <div class="card bg-primary text-white shadow-sm border-0" style="border-radius: 12px;">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="mr-3">
+                            <i class="fas fa-sign-in-alt fa-3x opacity-50"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-0 font-weight-bold">TOTAL REGISTRATION IN</h5>
+                            <small>Kendaraan yang masih berada di dalam area pabrik</small>
+                        </div>
+                        <div class="ml-auto text-right">
+                            <h1 class="font-weight-bold mb-0" style="font-size: 2.5rem;">@Model.TotalRegIn</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Box Total Reg Out -->
+            <div class="col-md-6">
+                <div class="card bg-success text-white shadow-sm border-0" style="border-radius: 12px;">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="mr-3">
+                            <i class="fas fa-check-circle fa-3x opacity-50"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-0 font-weight-bold">TOTAL REGISTRATION OUT</h5>
+                            <small>Kendaraan yang sudah selesai transaksi (Shift ini)</small>
+                        </div>
+                        <div class="ml-auto text-right">
+                            <h1 class="font-weight-bold mb-0" style="font-size: 2.5rem;">@Model.TotalRegOut</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabel Monitoring Kendaraan Aktif -->
+        <div class="card shadow-sm border-0" style="border-radius: 15px;">
+            <div class="card-header bg-white py-3 border-0">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="font-weight-bold mb-0">
+                        <i class="fas fa-list mr-2 text-muted"></i>Daftar Antrean Aktif Saat Ini
+                    </h5>
+                    <div class="input-group input-group-sm" style="width: 300px;">
+                        <input type="text" id="tableSearch" class="form-control" placeholder="Cari Plat Nomor atau Driver..." style="border-radius: 8px;">
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0" id="registrationTable">
+                        <thead class="bg-light text-muted small text-uppercase">
+                            <tr>
+                                <th class="pl-4">Waktu & Sumber</th>
+                                <th>No. Kendaraan</th>
+                                <th>Nama Driver</th>
+                                <th>Pemasok / Tujuan</th>
+                                <th>Status Operasional</th>
+                                <th class="text-right pr-4">Opsi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Vehicles != null && Model.Vehicles.Any())
+                            {
+                                @foreach (var item in Model.Vehicles)
+                                {
+                                    <tr>
+                                        <td class="pl-4">
+                                            <span class="font-weight-bold text-primary">@item.RegisterTime.ToString("HH:mm")</span>
+                                            <div class="badge badge-light border text-muted px-2" style="font-size: 0.7rem;">@item.SourceTable</div>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-dark p-2" style="font-size: 1rem; min-width: 100px; font-family: monospace;">
+                                                @item.LicensePlate
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="font-weight-bold">@item.DriverName</div>
+                                        </td>
+                                        <td>
+                                            <div class="text-truncate" style="max-width: 200px;" title="@item.SupplierName">
+                                                @item.SupplierName
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-info px-3 py-2" style="border-radius: 20px;">
+                                                <i class="fas fa-hourglass-half mr-1"></i> @item.OperationalStatus
+                                            </span>
+                                        </td>
+                                        <td class="text-right pr-4">
+                                            <button class="btn btn-sm btn-outline-primary" title="Detail">
+                                                <i class="fas fa-search-plus"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="6" class="text-center py-5">
+                                        <div class="text-muted">
+                                            <i class="fas fa-folder-open fa-3x mb-3 opacity-25"></i>
+                                            <p class="mb-0">Tidak ada antrean kendaraan di dalam pabrik saat ini.</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- FOOTER DENGAN PAGINASI -->
+            <div class="card-footer bg-white border-0 py-3">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <small class="text-muted italic">* Data ditampilkan berdasarkan cut-off jam 07:00 pagi setiap harinya.</small>
+                    </div>
+                    <div class="col-md-6">
+                        @if (totalPages > 1)
+                        {
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination pagination-sm m-0 float-right">
+                                    <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                                        <a class="page-link" asp-action="TruckRegistration" asp-route-page="@(currentPage - 1)">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </a>
+                                    </li>
+
+                                    @for (int i = 1; i <= totalPages; i++)
+                                    {
+                                        <li class="page-item @(i == currentPage ? "active" : "")">
+                                            <a class="page-link" asp-action="TruckRegistration" asp-route-page="@i">@i</a>
+                                        </li>
+                                    }
+
+                                    <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                                        <a class="page-link" asp-action="TruckRegistration" asp-route-page="@(currentPage + 1)">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Logika pencarian instan pada tabel
+            $("#tableSearch").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#registrationTable tbody tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}
