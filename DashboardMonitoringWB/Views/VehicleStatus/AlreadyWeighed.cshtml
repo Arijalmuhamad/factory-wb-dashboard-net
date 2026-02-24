@@ -1,19 +1,24 @@
-﻿@{
-    ViewData["Title"] = "Monitoring Truk";
+﻿@model DashboardMonitoringWB.Models.VehicleStatusViewModel
+
+@{
+    ViewData["Title"] = "Monitoring Weighed";
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
 }
 
+<!-- Header Halaman -->
 <div class="content-header">
     <div class="container-fluid">
-        <div class="row mb-3 align-items-end">
+        <div class="row mb-3 align-items-center">
             <div class="col-sm-6">
                 <h1 class="m-0 text-dark font-weight-bold">
-                    <i class="fas fa-desktop mr-2 text-primary"></i>MONITORING REGISTRASI
+                    <i class="fas fa-balance-scale mr-2 text-primary"></i>MONITORING WEIGHED
                 </h1>
-                <p class="text-muted mb-0">Daftar kendaraan aktif di dalam area pabrik (In-Plant).</p>
+                <p class="text-muted small mb-0">Daftar kendaraan yang sedang dalam proses penimbangan (In-Plant).</p>
             </div>
-            <div class="col-sm-6 text-sm-right">
-                <button class="btn btn-primary shadow-sm px-4" style="border-radius: 10px;" data-toggle="modal" data-target="#modal-register">
-                    <i class="fas fa-truck-moving mr-2"></i>Registrasi In Baru
+            <div class="col-sm-6 text-right">
+                <button class="btn btn-primary shadow-sm px-4" style="border-radius: 10px;" onclick="location.reload();">
+                    <i class="fas fa-sync-alt mr-2"></i>Segarkan Data
                 </button>
             </div>
         </div>
@@ -22,22 +27,23 @@
 
 <section class="content">
     <div class="container-fluid">
+        <!-- Statistik Info Boxes (Dinamis dari Controller) -->
         <div class="row mb-4">
             <div class="col-md-4">
                 <div class="info-box shadow-sm border-0" style="border-radius: 12px;">
-                    <span class="info-box-icon bg-info elevation-0"><i class="fas fa-sign-in-alt"></i></span>
+                    <span class="info-box-icon bg-danger elevation-0"><i class="fas fa-sign-in-alt"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text text-uppercase small font-weight-bold text-muted">Total Reg In</span>
-                        <span class="info-box-number h4 mb-0">12 <small>Truk</small></span>
+                        <span class="info-box-text text-uppercase small font-weight-bold text-muted">Total Weighing In</span>
+                        <span class="info-box-number h4 mb-0">@Model.TotalWeighingIn <small class="font-weight-normal text-muted" style="font-size: 0.8rem;">Truk</small></span>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="info-box shadow-sm border-0" style="border-radius: 12px;">
-                    <span class="info-box-icon bg-success elevation-0"><i class="fas fa-sign-out-alt"></i></span>
+                    <span class="info-box-icon bg-orange elevation-0"><i class="fas fa-sign-out-alt text-white"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text text-uppercase small font-weight-bold text-muted">Total Reg Out</span>
-                        <span class="info-box-number h4 mb-0">8 <small>Truk</small></span>
+                        <span class="info-box-text text-uppercase small font-weight-bold text-muted">Total Weighing Out</span>
+                        <span class="info-box-number h4 mb-0">@Model.TotalWeighingOut <small class="font-weight-normal text-muted" style="font-size: 0.8rem;">Truk</small></span>
                     </div>
                 </div>
             </div>
@@ -46,103 +52,167 @@
                     <span class="info-box-icon bg-warning elevation-0"><i class="fas fa-hourglass-half text-white"></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text text-uppercase small font-weight-bold text-muted">Rata-rata Durasi</span>
-                        <span class="info-box-number h4 mb-0">45 <small>Menit</small></span>
+                        <span class="info-box-number h4 mb-0">@Model.AvgDuration <small class="font-weight-normal text-muted" style="font-size: 0.8rem;">Menit</small></span>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Tabel Antrean Timbang -->
         <div class="card shadow-sm border-0" style="border-radius: 15px;">
             <div class="card-header bg-white py-3 border-0">
-                <div class="row align-items-center">
-                    <div class="col-md-8">
-                        <h5 class="font-weight-bold mb-0">Antrean Aktif</h5>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <input type="text" id="tableSearch" class="form-control form-control-sm border-right-0" placeholder="Cari Plat Nomor atau Nama Driver..." style="border-radius: 8px 0 0 8px;">
-                            <div class="input-group-append">
-                                <span class="input-group-text bg-white border-left-0" style="border-radius: 0 8px 8px 0;"><i class="fas fa-search text-muted"></i></span>
-                            </div>
-                        </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="font-weight-bold mb-0">
+                        <i class="fas fa-list mr-2 text-muted"></i>Antrean Aktif Timbangan
+                    </h5>
+                    <div class="input-group input-group-sm" style="width: 300px;">
+                        <input type="text" id="tableSearch" class="form-control" placeholder="Cari Plat Nomor atau Driver..." style="border-radius: 8px;">
                     </div>
                 </div>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0" id="registrationTable">
+                    <table class="table table-hover align-middle mb-0" id="weighedTable">
                         <thead class="bg-light text-muted small text-uppercase">
                             <tr>
-                                <th class="pl-4">Jam Register</th>
-                                <th>No. Polisi</th>
+                                <th class="pl-4">Waktu & Jenis</th>
+                                <th>No. Kendaraan</th>
                                 <th>Informasi Driver</th>
                                 <th>Status Antrean</th>
                                 <th class="text-right pr-4">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="row-in">
-                                <td class="pl-4">
-                                    <span class="font-weight-bold d-block">09:15</span>
-                                    <small class="badge badge-light border text-muted">Reg IN</small>
-                                </td>
-                                <td>
-                                    <span class="badge badge-dark p-2 px-3" style="font-size: 1rem; font-family: 'Courier New', Courier, monospace;">BH 1234 ABC</span>
-                                </td>
-                                <td>
-                                    <div class="font-weight-bold text-dark">Budi Setiawan</div>
-                                    <div class="small text-muted">PT. Sawit Berkah (FFB)</div>
-                                </td>
-                                <td>
-                                    <span class="badge bg-soft-primary text-primary px-3 py-2" style="border-radius: 10px;">
-                                        <i class="fas fa-clock mr-1"></i> WAITING WEIGH IN
-                                    </span>
-                                </td>
-                                <td class="text-right pr-4">
-                                    <button class="btn btn-sm btn-outline-info rounded-pill px-3">Lanjut Timbang</button>
-                                </td>
-                            </tr>
-
-                            <tr class="row-out">
-                                <td class="pl-4">
-                                    <span class="font-weight-bold d-block">08:30</span>
-                                    <small class="badge badge-light border text-muted">Reg OUT</small>
-                                </td>
-                                <td>
-                                    <span class="badge badge-dark p-2 px-3" style="font-size: 1rem; font-family: 'Courier New', Courier, monospace;">BG 8899 XY</span>
-                                </td>
-                                <td>
-                                    <div class="font-weight-bold text-dark">Andi Wijaya</div>
-                                    <div class="small text-muted">Estate Mandiri (CPO)</div>
-                                </td>
-                                <td>
-                                    <span class="badge bg-soft-success text-success px-3 py-2" style="border-radius: 10px;">
-                                        <i class="fas fa-check-circle mr-1"></i> WAITING WEIGH OUT
-                                    </span>
-                                </td>
-                                <td class="text-right pr-4">
-                                    <button class="btn btn-sm btn-success rounded-pill px-3 shadow-sm">Cetak Tiket</button>
-                                </td>
-                            </tr>
+                            @if (Model.Vehicles != null && Model.Vehicles.Any())
+                            {
+                                @foreach (var item in Model.Vehicles)
+                                {
+                                    <tr>
+                                        <td class="pl-4">
+                                            <span class="font-weight-bold d-block text-primary">@item.RegisterTime.ToString("HH:mm")</span>
+                                            <span class="badge badge-light border text-muted px-2" style="font-size: 0.7rem;">@item.SourceTable</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-dark p-2" style="font-size: 1rem; min-width: 100px; font-family: monospace;">
+                                                @item.LicensePlate
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="font-weight-bold text-dark">@item.DriverName</div>
+                                            <div class="small text-muted text-truncate" style="max-width: 180px;">@item.SupplierName</div>
+                                        </td>
+                                        <td>
+                                            @{
+                                                var isOut = item.OperationalStatus.Contains("OUT");
+                                                var statusClass = isOut ? "bg-soft-success text-success" : "bg-soft-primary text-primary";
+                                                var statusIcon = isOut ? "fa-check-circle" : "fa-clock";
+                                            }
+                                            <span class="badge @statusClass px-3 py-2" style="border-radius: 10px;">
+                                                <i class="fas @statusIcon mr-1"></i> @item.OperationalStatus
+                                            </span>
+                                        </td>
+                                        <td class="text-right pr-4">
+                                            @if (isOut)
+                                            {
+                                                <button class="btn btn-sm btn-success rounded-pill px-3 shadow-sm">
+                                                    <i class="fas fa-print mr-1"></i> Cetak Tiket
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button class="btn btn-sm btn-outline-info rounded-pill px-3">
+                                                    Lanjut Timbang
+                                                </button>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="5" class="text-center py-5">
+                                        <div class="text-muted">
+                                            <i class="fas fa-balance-scale fa-3x mb-3 opacity-25"></i>
+                                            <p class="mb-0">Tidak ada kendaraan dalam proses penimbangan saat ini.</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="card-footer bg-white text-muted small py-3 border-0">
-                <i class="fas fa-info-circle mr-1"></i> Klik 'Detail' untuk melihat riwayat log pergerakan truk.
+
+            <!-- Footer & Paginasi (Dinamis dari Controller) -->
+            <div class="card-footer bg-white border-0 py-3">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-muted small">
+                        <i class="fas fa-info-circle mr-1"></i> Data diperbarui secara real-time.
+                    </div>
+                    <div class="col-md-6">
+                        @if (totalPages > 1)
+                        {
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination pagination-sm m-0 float-right">
+                                    <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                                        <a class="page-link" asp-action="AlreadyWeighed" asp-route-page="@(currentPage - 1)">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </a>
+                                    </li>
+                                    @for (int i = 1; i <= totalPages; i++)
+                                    {
+                                        <li class="page-item @(i == currentPage ? "active" : "")">
+                                            <a class="page-link" asp-action="AlreadyWeighed" asp-route-page="@i">@i</a>
+                                        </li>
+                                    }
+                                    <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                                        <a class="page-link" asp-action="AlreadyWeighed" asp-route-page="@(currentPage + 1)">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        }
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
-@* 
-@await Html.PartialAsync("_RegistrationModal") *@
+
+<style>
+    .bg-soft-primary {
+        background-color: rgba(0, 123, 255, 0.1);
+    }
+
+    .bg-soft-success {
+        background-color: rgba(40, 167, 69, 0.1);
+    }
+
+    .bg-orange {
+        background-color: #fd7e14;
+    }
+
+    .pagination .page-link {
+        border-radius: 5px;
+        margin: 0 2px;
+        border: none;
+        color: #6c757d;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #007bff;
+        color: white;
+    }
+</style>
 
 @section Scripts {
     <script>
         $(document).ready(function () {
             $("#tableSearch").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
-                $("#registrationTable tbody tr").filter(function () {
+                $("#weighedTable tbody tr").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });

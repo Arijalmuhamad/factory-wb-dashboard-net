@@ -5,6 +5,12 @@ namespace DashboardMonitoringWB.Models
 {
 	public class VehicleStatusViewModel
 	{
+		// Properti untuk Statistik di Info-Box
+		public int TotalWeighingIn { get; set; }  // Untuk "Total Weighing In"
+		public int TotalWeighingOut { get; set; } // Untuk "Total Weighing Out"
+		public int AvgDuration { get; set; }      // Untuk "Rata-rata Durasi"
+
+		// Properti yang sudah ada sebelumnya
 		public int TotalRegIn { get; set; }
 		public int TotalRegOut { get; set; }
 		public double AverageDuration { get; set; }
@@ -16,15 +22,9 @@ namespace DashboardMonitoringWB.Models
 	{
 		public string TicketNo { get; set; }
 		public DateTime RegisterTime { get; set; }
-
-		// Menggunakan nama yang konsisten dengan query baru Anda (LicensePlate tetap bisa digunakan)
 		public string LicensePlate { get; set; }
-
 		public string DriverName { get; set; }
-
-		// Properti ini tetap menampung hasil dari supplier/csid/plant_dest_sender/supid
 		public string SupplierName { get; set; }
-
 		public string Status { get; set; }
 		public string OperationalStatus { get; set; }
 		public string SourceTable { get; set; }
