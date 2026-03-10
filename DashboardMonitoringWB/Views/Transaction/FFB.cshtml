@@ -1,0 +1,246 @@
+﻿@model IEnumerable<DashboardMonitoringWB.Models.TransactionViewModel>
+
+@{
+    ViewData["Title"] = "Transaksi FFB (TBS)";
+
+    // Pastikan casting ke decimal untuk menghindari error CS0019
+    decimal totalTonaseKg = (decimal)(ViewBag.TotalTonase ?? 0m);
+
+    // Kalkulasi TBS Luar vs Inti menggunakan filter sederhana
+    var tonaseInti = Model != null ? Model.Where(x => x.CustomerSupplier != null && (x.CustomerSupplier.Contains("EST") || x.CustomerSupplier.Contains("INTI"))).Sum(x => x.Netto) : 0m;
+    var tonaseLuar = totalTonaseKg - tonaseInti;
+
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    string currentStatus = ViewBag.CurrentStatus ?? "";
+}
+
+<!-- Content Header -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-3 align-items-center">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark font-weight-bold">
+                    <i class="fas fa-leaf mr-2 text-success"></i>TRANSAKSI FFB (TBS)
+                </h1>
+                <p class="text-muted small mb-0">Manajemen data transaksi Tandan Buah Segar berdasarkan cut-off operasional.</p>
+            </div>
+            <div class="col-sm-6 text-right">
+                <div class="btn-group shadow-sm">
+                    <button class="btn btn-white btn-sm border dropdown-toggle" data-toggle="dropdown">
+                        <i class="fas fa-filter mr-1 text-muted"></i> Filter Status: @(string.IsNullOrEmpty(currentStatus) ? "Semua" : currentStatus.ToUpper())
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" asp-action="FFB" asp-route-status="">Semua Data</a>
+                        <a class="dropdown-item" asp-action="FFB" asp-route-status="regin">Registration In</a>
+                        <a class="dropdown-item" asp-action="FFB" asp-route-status="weighin">Weighing In</a>
+                        <a class="dropdown-item" asp-action="FFB" asp-route-status="weighout">Weighing Out</a>
+                        <a class="dropdown-item" asp-action="FFB" asp-route-status="regout">Completed</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+
+        <!-- Statistik Tonase -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="info-box shadow-sm border-0" style="border-radius: 12px; background: linear-gradient(135deg, #1e7e34, #28a745);">
+                    <span class="info-box-icon text-white opacity-75"><i class="fas fa-weight"></i></span>
+                    <div class="info-box-content text-white">
+                        <span class="info-box-text text-uppercase small font-weight-bold">Total Tonase Shift Ini</span>
+                        <!-- FIX CS0019: Gunakan literal m untuk decimal -->
+                        <span class="info-box-number h3 mb-0">@((totalTonaseKg / 1000m).ToString("N2")) <small>Tons</small></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="info-box shadow-sm border-0" style="border-radius: 12px;">
+                    <span class="info-box-icon bg-info elevation-0"><i class="fas fa-shuttle-van"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text text-uppercase small font-weight-bold text-muted">TBS Luar (External)</span>
+                        <span class="info-box-number h4 mb-0">@((tonaseLuar / 1000m).ToString("N2")) <small class="text-muted">Tons</small></span>
+                        <div class="progress progress-sm mt-1">
+                            @{
+                                decimal pctLuar = totalTonaseKg > 0 ? (tonaseLuar / totalTonaseKg) * 100 : 0;
+                            }
+                            <div class="progress-bar bg-info" style="width: @pctLuar.ToString("0")%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="info-box shadow-sm border-0" style="border-radius: 12px;">
+                    <span class="info-box-icon bg-olive elevation-0 text-white"><i class="fas fa-home"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text text-uppercase small font-weight-bold text-muted">TBS Inti / Sepupu</span>
+                        <span class="info-box-number h4 mb-0">@((tonaseInti / 1000m).ToString("N2")) <small class="text-muted">Tons</small></span>
+                        <div class="progress progress-sm mt-1">
+                            @{
+                                decimal pctInti = totalTonaseKg > 0 ? (tonaseInti / totalTonaseKg) * 100 : 0;
+                            }
+                            <div class="progress-bar bg-olive" style="width: @pctInti.ToString("0")%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0" style="border-radius: 15px;">
+            <div class="card-header bg-white py-3 border-0">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="font-weight-bold mb-0 text-dark">
+                        <i class="fas fa-list-ul mr-2 text-muted"></i>Rincian Transaksi
+                    </h5>
+                    <div class="input-group input-group-sm" style="width: 250px;">
+                        <input type="text" id="ffbSearch" class="form-control" placeholder="Cari No. Tiket / Plat...">
+                        <div class="input-group-append">
+                            <span class="input-group-text bg-light border-left-0"><i class="fas fa-search"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0" id="ffbTable">
+                        <thead class="bg-light text-muted small text-uppercase">
+                            <tr>
+                                <th class="text-center" width="60">No</th>
+                                <th>No. Tiket / Supir</th>
+                                <th>Plat Nomor</th>
+                                <th>Supplier / Estate</th>
+                                <th>Waktu (In / Out)</th>
+                                <th>Weiging In</th>
+                                <th>Weiging Out</th>
+                                <th class="text-right">Netto (Kg)</th>
+                                <th class="text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Any())
+                            {
+                                int rowNum = ((currentPage - 1) * 10) + 1;
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="text-center text-muted">@(rowNum++)</td>
+                                        <td>
+                                            <span class="font-weight-bold d-block text-primary">@item.TicketNo</span>
+                                            <span class="small text-muted"><i class="fas fa-user-circle mr-1"></i> @item.DriverName</span>
+                                        </td>
+                                        <td><span class="badge badge-dark font-family-mono p-2">@item.VehicleNo</span></td>
+                                        <td>
+                                            <div class="font-weight-bold">@item.CustomerSupplier</div>
+                                            <div class="badge badge-pill badge-light border text-xs">
+                                                @* @((item.CustomerSupplier != null && item.CustomerSupplier.Contains("EST")) ? "TBS Inti" : "TBS Luar") *@
+                                                @item.EstateCode
+                                            </div>
+                                        </td>
+                                        <td class="small">
+                                            <!-- MENGGUNAKAN PROPERTI STRING TimeIn & TimeOut DARI MODEL -->
+                                            <div class="text-success">
+                                                <i class="fas fa-sign-in-alt mr-1"></i>
+                                                @(string.IsNullOrEmpty(item.TimeIn) ? "-" : item.TimeIn)
+                                            </div>
+                                            <div class="@(!string.IsNullOrEmpty(item.TimeOut) && item.TimeOut != "00:00:00" ? "text-danger" : "text-muted")">
+                                                <i class="fas fa-sign-out-alt mr-1"></i>
+                                                @(!string.IsNullOrEmpty(item.TimeOut) && item.TimeOut != "00:00:00" ? item.TimeOut : "In-Process")
+                                            </div>
+                                        </td>
+                                        <td class="text-right font-weight-bold text-dark">
+                                            @item.WeightIn.ToString("N0")
+                                        </td>
+                                        <td class="text-right font-weight-bold text-dark">
+                                            @item.WeightOut.ToString("N0")
+                                        </td>
+                                        <td class="text-right font-weight-bold text-dark">
+                                            @item.Netto.ToString("N0")
+                                        </td>
+                                        <td class="text-center">
+                                            @{
+                                                var statusClass = item.Status switch
+                                                {
+                                                                    "COMPLETED" => "bg-soft-success text-success",
+                                                                    "WEIGHING OUT" => "bg-soft-primary text-primary",
+                                                    _ => "bg-soft-warning text-warning"
+                                                };
+                                            }
+                                            <span class="badge @statusClass px-3 py-2" style="border-radius: 10px; min-width: 120px;">
+                                                @item.Status
+                                            </span>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer bg-white border-0 py-3">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-muted small">
+                        Halaman @currentPage dari @totalPages
+                    </div>
+                    <div class="col-md-6 text-right">
+                        @if (totalPages > 1)
+                        {
+                            <nav class="d-inline-block">
+                                <ul class="pagination pagination-sm m-0">
+                                    <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                                        <a class="page-link" asp-action="FFB" asp-route-page="@(currentPage - 1)" asp-route-status="@currentStatus">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </a>
+                                    </li>
+                                    @for (int i = 1; i <= totalPages; i++)
+                                    {
+                                        <li class="page-item @(i == currentPage ? "active" : "")">
+                                            <a class="page-link" asp-action="FFB" asp-route-page="@i" asp-route-status="@currentStatus">@i</a>
+                                        </li>
+                                    }
+                                    <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                                        <a class="page-link" asp-action="FFB" asp-route-page="@(currentPage + 1)" asp-route-status="@currentStatus">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .bg-soft-success {
+        background-color: rgba(40, 167, 69, 0.12);
+    }
+
+    .bg-soft-primary {
+        background-color: rgba(0, 123, 255, 0.12);
+    }
+
+    .bg-soft-warning {
+        background-color: rgba(255, 193, 7, 0.12);
+    }
+
+    .font-family-mono {
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: bold;
+    }
+
+    .bg-olive {
+        background-color: #3d9970;
+    }
+
+    .table td {
+        vertical-align: middle !important;
+    }
+</style>

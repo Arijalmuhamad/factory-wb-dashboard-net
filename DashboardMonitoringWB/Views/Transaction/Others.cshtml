@@ -1,0 +1,372 @@
+﻿@model IEnumerable<DashboardMonitoringWB.Models.TransactionViewModel>
+
+@{
+    ViewData["Title"] = "Transaksi Lainnya (Others)";
+
+    // Mengambil data dari ViewBag
+    double totalTonase = ViewBag.TotalTonase ?? 0;
+    int totalTruck = ViewBag.TotalTruck ?? 0;
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    string currentStatus = ViewBag.CurrentStatus ?? "";
+
+    // Mapping Label Status untuk Display Button
+    var statusLabels = new Dictionary<string, string> {
+        { "regin", "Registration In" },
+        { "weighin", "Weighing In" },
+        { "weighout", "Weighing Out" },
+        { "regout", "Completed" }
+    };
+
+    string displayStatus = "Semua Data";
+    if (!string.IsNullOrEmpty(currentStatus) && statusLabels.ContainsKey(currentStatus))
+    {
+        displayStatus = statusLabels[currentStatus];
+    }
+
+    // Menghitung ringkasan status dari data model (InMemory filter untuk card statistik)
+    int completedCount = Model.Count(x => x.Status == "COMPLETED");
+    int inProgressCount = Model.Count(x => x.Status != "COMPLETED");
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-3 align-items-center">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark font-weight-bold">
+                    <i class="fas fa-boxes mr-2 text-secondary"></i>TRANSAKSI LAINNYA
+                </h1>
+                <p class="text-muted small mb-0">Monitoring operasional harian untuk penimbangan material umum.</p>
+            </div>
+            <div class="col-sm-6">
+                <div class="d-flex justify-content-end align-items-center">
+                    <button class="btn btn-white btn-sm border shadow-sm mr-2" onclick="location.reload()">
+                        <i class="fas fa-sync-alt mr-1 text-muted"></i> Refresh
+                    </button>
+
+                    <div class="dropdown shadow-sm">
+                        <button class="btn btn-white btn-sm border dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-filter mr-1 text-muted"></i>
+                            Status: <span class="font-weight-bold text-primary">@displayStatus</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right shadow border-0">
+                            <h6 class="dropdown-header">Pilih Status Penimbangan</h6>
+                            <a class="dropdown-item @(string.IsNullOrEmpty(currentStatus) ? "active" : "")" asp-action="Others" asp-route-status="">Tampilkan Semua</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item @(currentStatus == "regin" ? "active" : "")" asp-action="Others" asp-route-status="regin">Registration In</a>
+                            <a class="dropdown-item @(currentStatus == "weighin" ? "active" : "")" asp-action="Others" asp-route-status="weighin">Weighing In</a>
+                            <a class="dropdown-item @(currentStatus == "weighout" ? "active" : "")" asp-action="Others" asp-route-status="weighout">Weighing Out</a>
+                            <a class="dropdown-item @(currentStatus == "regout" ? "active" : "")" asp-action="Others" asp-route-status="regout">Completed</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card shadow-sm border-0 mb-4 card-stat-custom" style="border-left: 4px solid #6c757d;">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p class="text-muted mb-1 small font-weight-bold">TOTAL TONASE</p>
+                                <h3 class="font-weight-bold mb-0">@((totalTonase / 1000.0).ToString("N2")) <small class="text-xs">Tons</small></h3>
+                            </div>
+                            <div class="icon-shape bg-soft-secondary rounded-circle p-3">
+                                <i class="fas fa-weight text-secondary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow-sm border-0 mb-4 card-stat-custom" style="border-left: 4px solid #343a40;">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p class="text-muted mb-1 small font-weight-bold">TOTAL TRUCK</p>
+                                <h3 class="font-weight-bold mb-0">@totalTruck <small class="text-xs">Units</small></h3>
+                            </div>
+                            <div class="icon-shape bg-soft-dark rounded-circle p-3">
+                                <i class="fas fa-truck text-dark"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow-sm border-0 mb-4 card-stat-custom" style="border-left: 4px solid #28a745;">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p class="text-muted mb-1 small font-weight-bold">COMPLETED</p>
+                                <h3 class="font-weight-bold mb-0 text-success">@completedCount</h3>
+                            </div>
+                            <div class="icon-shape bg-soft-success rounded-circle p-3">
+                                <i class="fas fa-check-circle text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow-sm border-0 mb-4 card-stat-custom" style="border-left: 4px solid #ffc107;">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p class="text-muted mb-1 small font-weight-bold">IN PROGRESS</p>
+                                <h3 class="font-weight-bold mb-0 text-warning">@inProgressCount</h3>
+                            </div>
+                            <div class="icon-shape bg-soft-warning rounded-circle p-3">
+                                <i class="fas fa-spinner fa-spin text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0" style="border-radius: 15px;">
+            <div class="card-header bg-white py-3 border-0">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="font-weight-bold mb-0 text-dark">
+                        <i class="fas fa-stream mr-2 text-muted"></i>Log Penimbangan Others
+                    </h5>
+                    <div class="input-group input-group-sm" style="width: 250px;">
+                        <input type="text" id="tableSearch" class="form-control bg-light border-0" placeholder="Cari Ticket/Part/Supir..." style="border-radius: 8px;">
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light text-muted small text-uppercase">
+                            <tr>
+                                <th class="text-center" width="50">No</th>
+                                <th>Barang (Part)</th>
+                                <th>No. Tiket / Driver</th>
+                                <th>Plat Nomor</th>
+                                <th>Vendor / Asal</th>
+                                <th>Waktu (In / Out)</th>
+                                <th class="text-right">Wb. In</th>
+                                <th class="text-right">Wb. Out</th>
+                                <th class="text-right">Netto (Kg)</th>
+                                <th class="text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Any())
+                            {
+                                int rowNo = ((currentPage - 1) * 10) + 1;
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="text-center text-muted small">@(rowNo++)</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="p-2 bg-soft-secondary rounded mr-3">
+                                                    <i class="fas fa-box text-secondary text-sm"></i>
+                                                </div>
+                                                <div>
+                                                    <span class="font-weight-bold d-block text-dark text-sm">@item.ProductPart</span>
+                                                    <span class="text-xs text-muted">@item.SourceTable</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="font-weight-bold d-block text-primary text-sm">@item.TicketNo</span>
+                                            <span class="text-xs text-muted">@item.DriverName</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-dark font-family-mono px-2 py-1">@item.VehicleNo</span>
+                                        </td>
+                                        <td>
+                                            <div class="text-sm font-weight-bold text-dark">@item.CustomerSupplier</div>
+                                            <div class="text-xs text-muted small">ID: @item.EstateCode</div>
+                                        </td>
+                                        <td class="small">
+                                            <div class="text-success"><i class="fas fa-sign-in-alt mr-1"></i> @(string.IsNullOrEmpty(item.TimeIn) ? "-" : item.TimeIn)</div>
+                                            <div class="@(!string.IsNullOrEmpty(item.TimeOut) && item.TimeOut != "00:00:00" ? "text-danger" : "text-muted")">
+                                                <i class="fas fa-sign-out-alt mr-1"></i> @(!string.IsNullOrEmpty(item.TimeOut) && item.TimeOut != "00:00:00" ? item.TimeOut : "In-Process")
+                                            </div>
+                                        </td>
+                                        <td class="text-right text-xs">@item.WeightIn.ToString("N0")</td>
+                                        <td class="text-right text-xs">@item.WeightOut.ToString("N0")</td>
+                                        <td class="text-right font-weight-bold text-sm">
+                                            @(item.Netto > 0 ? item.Netto.ToString("N0") : "-")
+                                        </td>
+                                        <td class="text-center">
+                                            @{
+                                                string statusClass = item.Status switch
+                                                {
+                                                                    "COMPLETED" => "status-completed",
+                                                                    "WEIGHING OUT" => "status-out",
+                                                                    "WEIGHING IN" => "status-in",
+                                                    _ => "status-registered"
+                                                };
+                                            }
+                                            <span class="status-pill @statusClass">@item.Status</span>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="10" class="text-center py-5 text-muted">
+                                        <i class="fas fa-folder-open fa-3x mb-3 d-block opacity-50"></i>
+                                        Tidak ada data @(string.IsNullOrEmpty(currentStatus) ? "" : "dengan status " + displayStatus) untuk periode ini.
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-footer bg-white border-0 py-3">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-muted small">
+                        Halaman @currentPage dari @totalPages
+                    </div>
+                    <div class="col-md-6 text-right">
+                        @if (totalPages > 1)
+                        {
+                            <nav class="d-inline-block">
+                                <ul class="pagination pagination-sm m-0">
+                                    <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                                        <a class="page-link" asp-action="Others" asp-route-page="@(currentPage - 1)" asp-route-status="@currentStatus">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </a>
+                                    </li>
+                                    @for (int i = 1; i <= totalPages; i++)
+                                    {
+                                        <li class="page-item @(i == currentPage ? "active" : "")">
+                                            <a class="page-link" asp-action="Others" asp-route-page="@i" asp-route-status="@currentStatus">@i</a>
+                                        </li>
+                                    }
+                                    <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                                        <a class="page-link" asp-action="Others" asp-route-page="@(currentPage + 1)" asp-route-status="@currentStatus">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* ... (Style tetap sama seperti yang sebelumnya) ... */
+    .dropdown-item.active {
+        background-color: #f8f9fa;
+        color: #007bff;
+        font-weight: bold;
+    }
+</style>
+
+<style>
+    /* Status Pills CSS - Sesuai dengan FFB & Sales */
+    .status-pill {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 50px;
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+    }
+
+    .status-completed {
+        background-color: rgba(40, 167, 69, 0.15);
+        color: #218838;
+    }
+
+    .status-out {
+        background-color: rgba(0, 123, 255, 0.15);
+        color: #0069d9;
+    }
+
+    .status-in {
+        background-color: rgba(255, 193, 7, 0.15);
+        color: #856404;
+    }
+
+    .status-registered {
+        background-color: rgba(108, 117, 125, 0.15);
+        color: #495057;
+    }
+
+    /* Soft Colors */
+    .bg-soft-secondary {
+        background-color: rgba(108, 117, 125, 0.12);
+    }
+
+    .bg-soft-success {
+        background-color: rgba(40, 167, 69, 0.12);
+    }
+
+    .bg-soft-warning {
+        background-color: rgba(255, 193, 7, 0.12);
+    }
+
+    .bg-soft-info {
+        background-color: rgba(23, 162, 184, 0.12);
+    }
+
+    .bg-soft-dark {
+        background-color: rgba(52, 58, 64, 0.12);
+    }
+
+    .icon-shape {
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .font-family-mono {
+        font-family: &#39;
+        Courier New&#39;
+        , Courier, monospace;
+        letter-spacing: 0.5px;
+    }
+
+    .card-stat-custom {
+        border-radius: 12px;
+        transition: all 0.2s ease;
+    }
+
+        .card-stat-custom:hover {
+            transform: translateY(-3px);
+        }
+
+    .table td {
+        vertical-align: middle !important;
+        padding: 10px 12px !important;
+    }
+
+    .text-xs {
+        font-size: 0.7rem;
+    }
+</style>
+
+<script>
+    // Simple client-side search for the table
+    document.getElementById('tableSearch').addEventListener('keyup', function() {
+    let val = this.value.toLowerCase();
+    let rows = document.querySelectorAll('tbody tr');
+    rows.forEach(row => {
+    row.style.display = row.innerText.toLowerCase().includes(val) ? '' : 'none';
+    });
+    });
+</script>

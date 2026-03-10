@@ -1,0 +1,203 @@
+﻿@model DashboardMonitoringWB.Models.VehicleStatusViewModel
+
+@{
+    ViewData["Title"] = "Transaksi Transfer (Internal)";
+    // Data Dummy untuk Statistik
+    var totalKirim = 85400; // kg
+    var totalTerima = 27000; // kg
+
+    // Dummy Data per Komoditas Transfer
+    var stats = new[] {
+        new { Product = "CPO", Tonase = 75000, Count = 6, Color = "bg-primary" },
+        new { Product = "KERNEL", Tonase = 22400, Count = 3, Color = "bg-purple" },
+        new { Product = "SHELL", Tonase = 15000, Count = 2, Color = "bg-info" }
+    };
+}
+
+<!-- Content Header -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-3 align-items-center">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark font-weight-bold">
+                    <i class="fas fa-exchange-alt mr-2 text-info"></i>TRANSAKSI TRANSFER
+                </h1>
+                <p class="text-muted small mb-0">Pemantauan perpindahan stok internal (Kirim & Terima) antar lokasi.</p>
+            </div>
+            <div class="col-sm-6 text-right">
+                <div class="btn-group shadow-sm">
+                    <button class="btn btn-outline-info btn-sm active">Semua</button>
+                    <button class="btn btn-outline-info btn-sm">Transfer Kirim</button>
+                    <button class="btn btn-outline-info btn-sm">Transfer Terima</button>
+                </div>
+                <button class="btn btn-info btn-sm ml-2 shadow-sm">
+                    <i class="fas fa-file-download mr-1"></i> Report
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+
+        <!-- Summary Cards -->
+        <div class="row">
+            <!-- Summary Kirim -->
+            <div class="col-md-3">
+                <div class="info-box shadow-sm border-0 bg-white" style="border-radius: 12px; border-left: 5px solid #17a2b8;">
+                    <span class="info-box-icon text-info"><i class="fas fa-paper-plane"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text text-uppercase small font-weight-bold text-muted">Total Kirim (Out)</span>
+                        <span class="info-box-number h4 mb-0">@((totalKirim / 1000.0).ToString("N2")) <small>Tons</small></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Terima -->
+            <div class="col-md-3">
+                <div class="info-box shadow-sm border-0 bg-white" style="border-radius: 12px; border-left: 5px solid #28a745 text-muted;">
+                    <span class="info-box-icon text-success"><i class="fas fa-box-open"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text text-uppercase small font-weight-bold text-muted">Total Terima (In)</span>
+                        <span class="info-box-number h4 mb-0">@((totalTerima / 1000.0).ToString("N2")) <small>Tons</small></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Divider or Space -->
+            <div class="col-md-6 d-none d-md-flex align-items-center justify-content-end">
+                <div class="text-right mr-3">
+                    <h6 class="text-muted mb-0 small font-weight-bold text-uppercase">Komoditas Utama</h6>
+                    <div class="d-flex gap-2 mt-1">
+                        @foreach (var item in stats.Take(2))
+                        {
+                            <span class="badge @item.Color px-2 py-1 ml-1" style="font-size: 10px;">@item.Product: @((item.Tonase / 1000.0))T</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabel Transaksi Transfer -->
+        <div class="card shadow-sm border-0 mt-3" style="border-radius: 15px;">
+            <div class="card-header bg-white py-3 border-0">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="font-weight-bold mb-0 text-dark">
+                        <i class="fas fa-route mr-2 text-muted"></i>Log Perpindahan Internal
+                    </h5>
+                    <div class="input-group input-group-sm" style="width: 250px;">
+                        <input type="text" class="form-control bg-light border-0" placeholder="Cari Tiket / Plat..." style="border-radius: 8px 0 0 8px;">
+                        <div class="input-group-append">
+                            <span class="input-group-text bg-light border-0" style="border-radius: 0 8px 8px 0;"><i class="fas fa-search"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light text-muted small text-uppercase">
+                            <tr>
+                                <th class="text-center" width="60">No</th>
+                                <th>Keterangan</th>
+                                <th>Tiket / Supir</th>
+                                <th>Plat Nomor</th>
+                                <th>Asal / Tujuan</th>
+                                <th class="text-right">Netto (Kg)</th>
+                                <th class="text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Row 1: Transfer Kirim -->
+                            <tr>
+                                <td class="text-center text-muted">1</td>
+                                <td>
+                                    <span class="badge badge-pill badge-info px-2 py-1" style="font-size: 10px;">
+                                        <i class="fas fa-arrow-up mr-1"></i> KIRIM
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="font-weight-bold d-block text-dark">TRF-240522901</span>
+                                    <span class="small text-muted">Hendra</span>
+                                </td>
+                                <td><span class="badge badge-outline-dark p-2" style="border: 1px solid #ddd;">BK 7721 DX</span></td>
+                                <td>
+                                    <div class="small">
+                                        <span class="text-muted">Tujuan:</span> <strong>Bulking B</strong>
+                                    </div>
+                                    <div class="small text-muted font-italic">Produk: CPO</div>
+                                </td>
+                                <td class="text-right font-weight-bold text-primary">12,500</td>
+                                <td class="text-center">
+                                    <span class="badge bg-soft-success text-success px-3 py-2" style="border-radius: 8px;">
+                                        COMPLETED
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <!-- Row 2: Transfer Terima -->
+                            <tr>
+                                <td class="text-center text-muted">2</td>
+                                <td>
+                                    <span class="badge badge-pill badge-success px-2 py-1" style="font-size: 10px;">
+                                        <i class="fas fa-arrow-down mr-1"></i> TERIMA
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="font-weight-bold d-block text-dark">TRF-240522905</span>
+                                    <span class="small text-muted">Yusup</span>
+                                </td>
+                                <td><span class="badge badge-outline-dark p-2" style="border: 1px solid #ddd;">BM 1100 SA</span></td>
+                                <td>
+                                    <div class="small">
+                                        <span class="text-muted">Asal:</span> <strong>PKS B</strong>
+                                    </div>
+                                    <div class="small text-muted font-italic">Produk: KERNEL</div>
+                                </td>
+                                <td class="text-right font-weight-bold text-muted">-</td>
+                                <td class="text-center">
+                                    <span class="badge bg-soft-primary text-primary px-3 py-2" style="border-radius: 8px;">
+                                        WEIGHING OUT
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer bg-white border-0 py-3">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-muted small">
+                        Menampilkan data transfer internal (Kirim & Terima) hari ini.
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="pagination pagination-sm m-0 float-right">
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .bg-soft-success {
+        background-color: rgba(40, 167, 69, 0.12);
+    }
+
+    .bg-soft-primary {
+        background-color: rgba(0, 123, 255, 0.12);
+    }
+
+    .badge-outline-dark {
+        color: #333;
+        font-weight: bold;
+        background: transparent;
+    }
+
+    .table td {
+        vertical-align: middle !important;
+    }
+</style>

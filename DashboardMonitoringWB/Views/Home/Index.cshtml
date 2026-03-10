@@ -77,6 +77,7 @@
         </div>
 
         <div class="row mt-4">
+            <!-- FFB Intake Card -->
             <div class="col-12 col-sm-6 col-md-3 mb-4">
                 <div class="card info-card shadow-sm border-0 h-100" style="border-top: 4px solid #3b82f6 !important;">
                     <div class="card-body">
@@ -89,18 +90,17 @@
                         <h6 class="text-uppercase font-weight-bold mb-1 text-primary" style="font-size: 0.75rem; letter-spacing: 1px;">FFB Intake</h6>
                         <div class="row align-items-end no-gutters">
                             <div class="col-7">
-                                @* <h3 class="font-weight-bold mb-0 text-dark">245.000</h3> *@
                                 <h3 class="font-weight-bold mb-0 text-dark" id="count-tonnageFFB">@Model.TotalTonnageFFB</h3>
                                 <small class="text-muted font-weight-bold">Total Kg</small>
                             </div>
                             <div class="col-5 text-right border-left pl-2">
-                                @* <h4 class="font-weight-bold mb-0 text-primary" style="font-size: 1.25rem;">42</h4> *@
                                 <h4 class="font-weight-bold mb-0 text-primary" id="count-truckFFB">@Model.TotalTruckFFB</h4>
                                 <small class="text-muted">Trucks</small>
                             </div>
                         </div>
                         <div class="mt-3 pt-2 border-top text-center">
-                            <a href="#" class="btn btn-sm btn-block btn-light text-primary font-weight-bold shadow-sm" style="border-radius: 10px;">
+                            <!-- diarahkan ke TruckRegistration (FFB) -->
+                            <a asp-controller="Transaction" asp-action="FFB" class="btn btn-sm btn-block btn-light text-primary font-weight-bold shadow-sm" style="border-radius: 10px;">
                                 View Report <i class="fas fa-chevron-right ml-1" style="font-size: 0.6rem;"></i>
                             </a>
                         </div>
@@ -108,6 +108,7 @@
                 </div>
             </div>
 
+            <!-- CPO / PK Sales Card -->
             <div class="col-12 col-sm-6 col-md-3 mb-4">
                 <div class="card info-card shadow-sm border-0 h-100" style="border-top: 4px solid #ef4444 !important;">
                     <div class="card-body">
@@ -120,18 +121,17 @@
                         <h6 class="text-uppercase font-weight-bold mb-1 text-danger" style="font-size: 0.75rem; letter-spacing: 1px;">CPO / PK Sales</h6>
                         <div class="row align-items-end no-gutters">
                             <div class="col-7">
-                                @* <h3 class="font-weight-bold mb-0 text-dark">120.500</h3> *@
                                 <h3 class="font-weight-bold mb-0 text-dark" id="count-tonnageSales">@Model.TotalTonnageSales</h3>
                                 <small class="text-muted font-weight-bold">Total Kg</small>
                             </div>
                             <div class="col-5 text-right border-left pl-2">
-                                @* <h4 class="font-weight-bold mb-0 text-danger" style="font-size: 1.25rem;">12</h4> *@
                                 <h4 class="font-weight-bold mb-0 text-danger" id="count-truckSales">@Model.TotalTruckSales</h4>
                                 <small class="text-muted">Trucks</small>
                             </div>
                         </div>
                         <div class="mt-3 pt-2 border-top text-center">
-                            <a href="#" class="btn btn-sm btn-block btn-light text-danger font-weight-bold shadow-sm" style="border-radius: 10px;">
+                            <!-- diarahkan ke Sales -->
+                            <a asp-controller="Transaction" asp-action="Sales" class="btn btn-sm btn-block btn-light text-danger font-weight-bold shadow-sm" style="border-radius: 10px;">
                                 View Report <i class="fas fa-chevron-right ml-1" style="font-size: 0.6rem;"></i>
                             </a>
                         </div>
@@ -139,6 +139,7 @@
                 </div>
             </div>
 
+            <!-- Internal Transfer Card -->
             <div class="col-12 col-sm-6 col-md-3 mb-4">
                 <div class="card info-card shadow-sm border-0 h-100" style="border-top: 4px solid #f59e0b !important;">
                     <div class="card-body">
@@ -151,18 +152,17 @@
                         <h6 class="text-uppercase font-weight-bold mb-1 text-warning" style="font-size: 0.75rem; letter-spacing: 1px;">Internal Stock</h6>
                         <div class="row align-items-end no-gutters">
                             <div class="col-7">
-                                @* <h3 class="font-weight-bold mb-0 text-dark">45.000</h3> *@
                                 <h3 class="font-weight-bold mb-0 text-dark" id="count-tonnageTransfer">@Model.TotalTonnageTransfer</h3>
                                 <small class="text-muted font-weight-bold">Total Kg</small>
                             </div>
                             <div class="col-5 text-right border-left pl-2">
-                                @* <h4 class="font-weight-bold mb-0 text-warning" style="font-size: 1.25rem;">8</h4> *@
                                 <h4 class="font-weight-bold mb-0 text-warning" id="count-truckTransfer">@Model.TotalTruckTransfer</h4>
                                 <small class="text-muted">Trucks</small>
                             </div>
                         </div>
                         <div class="mt-3 pt-2 border-top text-center">
-                            <a href="#" class="btn btn-sm btn-block btn-light text-warning font-weight-bold shadow-sm" style="border-radius: 10px;">
+                            <!-- diarahkan ke Transfer -->
+                            <a asp-controller="Transaction" asp-action="Transfer" class="btn btn-sm btn-block btn-light text-warning font-weight-bold shadow-sm" style="border-radius: 10px;">
                                 View Report <i class="fas fa-chevron-right ml-1" style="font-size: 0.6rem;"></i>
                             </a>
                         </div>
@@ -170,6 +170,7 @@
                 </div>
             </div>
 
+            <!-- Others Card -->
             <div class="col-12 col-sm-6 col-md-3 mb-4">
                 <div class="card info-card shadow-sm border-0 h-100" style="border-top: 4px solid #10b981 !important;">
                     <div class="card-body">
@@ -182,18 +183,17 @@
                         <h6 class="text-uppercase font-weight-bold mb-1 text-success" style="font-size: 0.75rem; letter-spacing: 1px;">Misc Items</h6>
                         <div class="row align-items-end no-gutters">
                             <div class="col-7">
-                                @* <h3 class="font-weight-bold mb-0 text-dark">12.400</h3> *@
                                 <h3 class="font-weight-bold mb-0 text-dark" id="count-tonnageOthers">@Model.TotalTonnageOthers</h3>
                                 <small class="text-muted font-weight-bold">Total Kg</small>
                             </div>
                             <div class="col-5 text-right border-left pl-2">
-                                @* <h4 class="font-weight-bold mb-0 text-success" style="font-size: 1.25rem;">5</h4> *@
                                 <h4 class="font-weight-bold mb-0 text-success" id="count-truckOthers">@Model.TotalTruckOthers</h4>
                                 <small class="text-muted">Trucks</small>
                             </div>
                         </div>
                         <div class="mt-3 pt-2 border-top text-center">
-                            <a href="#" class="btn btn-sm btn-block btn-light text-success font-weight-bold shadow-sm" style="border-radius: 10px;">
+                            <!-- diarahkan ke Others -->
+                            <a asp-controller="Transaction" asp-action="Others" class="btn btn-sm btn-block btn-light text-success font-weight-bold shadow-sm" style="border-radius: 10px;">
                                 View Report <i class="fas fa-chevron-right ml-1" style="font-size: 0.6rem;"></i>
                             </a>
                         </div>

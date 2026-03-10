@@ -3,8 +3,9 @@
     var currentAction = ViewContext.RouteData.Values["Action"]?.ToString();
 
     var isDashboard = currentController == "Home";
-    // Cek apakah controller-nya adalah VehicleStatus
     var isVehicleStatus = currentController == "VehicleStatus";
+    // Logika untuk menu Transaction Data
+    var isTransaction = currentController == "Transaction";
     var isReports = currentController == "Reports";
     var isSettings = currentController == "Settings";
 }
@@ -73,10 +74,8 @@
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
-
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <!-- Arahkan ke Controller: VehicleStatus, Action: TruckRegistration -->
                             <a asp-controller="VehicleStatus" asp-action="TruckRegistration"
                                class="nav-link @(currentAction == "TruckRegistration" ? "active" : "")">
                                 <i class="far fa-circle nav-icon"></i>
@@ -84,7 +83,6 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <!-- Arahkan ke Controller: VehicleStatus, Action: AlreadyWeighed -->
                             <a asp-controller="VehicleStatus" asp-action="AlreadyWeighed"
                                class="nav-link @(currentAction == "AlreadyWeighed" ? "active" : "")">
                                 <i class="far fa-circle nav-icon"></i>
@@ -94,10 +92,51 @@
                     </ul>
                 </li>
 
+                <!-- TRANSACTION DATA (NEW) -->
+                <li class="nav-item @(isTransaction ? "menu-open" : "")">
+                    <a href="#" class="nav-link @(isTransaction ? "active" : "")">
+                        <i class="nav-icon fas fa-exchange-alt"></i>
+                        <p>
+                            Transaction Data
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a asp-controller="Transaction" asp-action="FFB"
+                               class="nav-link @(currentAction == "FFB" ? "active" : "")">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>FFB (TBS)</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Transaction" asp-action="Sales"
+                               class="nav-link @(currentAction == "Sales" ? "active" : "")">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Sales (Penjualan)</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Transaction" asp-action="Transfer"
+                               class="nav-link @(currentAction == "Transfer" ? "active" : "")">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Transfer (Internal)</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Transaction" asp-action="Others"
+                               class="nav-link @(currentAction == "Others" ? "active" : "")">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Others</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="nav-header">REPORTS & ANALYTICS</li>
 
                 <!-- REPORT -->
-                <li class="nav-item">
+                <li class="nav-item @(isReports ? "menu-open" : "")">
                     <a href="/Reports/Daily" class="nav-link @(isReports ? "active" : "")">
                         <i class="nav-icon fas fa-file-alt"></i>
                         <p>Daily Tonnage Report</p>
